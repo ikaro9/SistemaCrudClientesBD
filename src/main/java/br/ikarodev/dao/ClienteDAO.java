@@ -7,10 +7,10 @@ import java.sql.*;
 
 public class ClienteDAO {
     public void inserir (Cliente cliente){
-        String sql = "INSERT INTO clientes (Nome, Telefone, Email) VALUES (?,?,?)";
+        String sql = "INSERT INTO Clientes (Nome, Telefone, Email) VALUES (?,?,?)";
         try(Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1,cliente.getNome());
-            stmt.setInt(2,cliente.getTelefone());
+            stmt.setString(2,cliente.getTelefone());
             stmt.setString(3, cliente.getEmail());
             stmt.executeUpdate();
         } catch (SQLException e) {

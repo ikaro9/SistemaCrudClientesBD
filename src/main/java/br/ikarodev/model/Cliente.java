@@ -3,15 +3,23 @@ package br.ikarodev.model;
 public class Cliente {
     private int id;
     private String nome;
-    private int telefone;
+    private String telefone;
     private String email;
 
-    public Cliente(int id, String nome, int telefone, String email) {
+    public Cliente(int id, String nome, String telefone, String email) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
     }
+    public Cliente(String nome, String telefone, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
+
 
     public int getId() {
         return id;
@@ -29,11 +37,11 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 

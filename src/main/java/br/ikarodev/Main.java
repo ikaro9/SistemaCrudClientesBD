@@ -1,16 +1,10 @@
 package br.ikarodev;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import br.ikarodev.menu.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            Connection conn =
-                    DriverManager.getConnection("jdbc:sqlite:clientes.db");
-            System.out.println("Conectado com sucesso!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Menu menu = new Menu();
+        menu.exibirMenu();
     }
 }
