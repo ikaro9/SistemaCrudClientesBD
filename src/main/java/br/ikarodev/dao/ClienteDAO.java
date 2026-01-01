@@ -4,6 +4,8 @@ import br.ikarodev.model.Cliente;
 import br.ikarodev.db.Conexao;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO {
     public void inserir (Cliente cliente){
@@ -41,4 +43,25 @@ public class ClienteDAO {
         }
 
         }
+
+     public List<Cliente> listar(){
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM Clientes";
+        try(Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()){
+        while(rs.next()){
+            Cliente cliente = new Cliente(rs.getInt("ID"),
+                                          rs.getString("Nome"),
+                                          rs.getString("Telefone"),
+                                          rs.getString("Email"));
+
+        clientes.add(cliente);
+        }
+
+        } catch (SQLException e) {
+        System.out.println("Erro ao atualizar cliente: " + e.getMessage());
+    }
+        return clientes;
+     }
 }

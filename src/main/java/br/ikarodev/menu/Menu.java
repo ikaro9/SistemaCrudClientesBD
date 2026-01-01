@@ -3,6 +3,7 @@ package br.ikarodev.menu;
 import br.ikarodev.dao.ClienteDAO;
 import br.ikarodev.model.Cliente;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -28,6 +29,9 @@ public class Menu {
         switch (opcao){
             case 1:
              cadastrarCliente();
+                break;
+            case 2:
+                listaClientes();
                 break;
             case 3:
                 atualizarCliente();
@@ -69,5 +73,12 @@ public class Menu {
         String email = input.nextLine();
         Cliente novocliente = new Cliente(id,nome,telefone,email);
         clienteDAO.atualizar(novocliente);
+    }
+    public void listaClientes(){
+        List<Cliente> clientes = clienteDAO.listar();
+        System.out.println("--------Lista de Clientes-------");
+        for(Cliente i : clientes){
+            System.out.println(i);
+        }
     }
 }
