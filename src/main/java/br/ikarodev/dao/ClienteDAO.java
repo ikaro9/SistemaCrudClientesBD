@@ -17,4 +17,28 @@ public class ClienteDAO {
             System.out.println("Erro ao inserir cliente: " + e.getMessage());
         }
     }
+
+    public void remover(int id){
+        String sql = "DELETE FROM Clientes WHERE ID = ?";
+      try(Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)){
+          stmt.setInt(1,id);
+          stmt.executeUpdate();
+      } catch (SQLException e) {
+          System.out.println("Erro ao remover cliente: " + e.getMessage());
+      }
+    }
+
+    public void atualizar(Cliente cliente){
+        String sql = "UPDATE Clientes set Nome = ?,Telefone = ?,Email = ? WHERE ID = ?";
+        try(Connection conn = Conexao.conectar();PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getTelefone());
+            stmt.setString(3, cliente.getEmail());
+            stmt.setInt(4,cliente.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar cliente: " + e.getMessage());
+        }
+
+        }
 }
