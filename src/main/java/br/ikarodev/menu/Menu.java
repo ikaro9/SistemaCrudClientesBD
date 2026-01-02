@@ -1,6 +1,7 @@
 package br.ikarodev.menu;
 
 import br.ikarodev.dao.ClienteDAO;
+import br.ikarodev.db.Conexao;
 import br.ikarodev.model.Cliente;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class Menu {
     }
 
     public void exibirMenu(){
+        Conexao.CriarTabela();
         int opcao;
         do{
         System.out.println("-------Menu-------");
