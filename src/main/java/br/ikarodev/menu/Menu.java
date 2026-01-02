@@ -69,23 +69,48 @@ public class Menu {
     public void removerCliente(){
         System.out.println("Digite o id que deseja remover:");
         int id = input.nextInt();
-        clienteDAO.remover(id);
-        System.out.println("Cliente removido com sucesso!");
+        input.nextLine();
+        Cliente cliente = clienteDAO.buscarID(id);
+        if(cliente == null){
+            System.out.println("Cliente não encontrado.");
+        }
+        else {
+            System.out.println("Tem certeza que deseja remover " + clienteDAO.buscarID(id).getNome() + " ? (S/N)");
+            String conf = input.nextLine();
+            if (conf.equalsIgnoreCase("s")) {
+                clienteDAO.remover(id);
+                System.out.println("Cliente removido com sucesso!");
+            } else {
+                System.out.println("Cliente não removido.");
+            }
+        }
     }
 
     public void atualizarCliente(){
-        System.out.println("Digite o ID do cliente que deseja alterar: ");
+        System.out.println("Digite o ID do cliente que deseja atualizar: ");
         int id = input.nextInt();
         input.nextLine();
-        System.out.println("Digite o nome:");
-        String nome = input.nextLine();
-        System.out.println("Digite o telefone:");
-        String telefone = input.nextLine();
-        System.out.println("Digite o email:");
-        String email = input.nextLine();
-        Cliente novocliente = new Cliente(id,nome,telefone,email);
-        clienteDAO.atualizar(novocliente);
-        System.out.println("Cliente atualizado com sucesso!");
+        Cliente cliente = clienteDAO.buscarID(id);
+        if(cliente == null){
+            System.out.println("Cliente não encontrado.");
+        }
+        else {
+            System.out.println("Deseja atualizar " + clienteDAO.buscarID(id).getNome() + " ? (S/N)");
+            String conf = input.nextLine();
+            if (conf.equalsIgnoreCase("s")) {
+                System.out.println("Digite o nome:");
+                String nome = input.nextLine();
+                System.out.println("Digite o telefone:");
+                String telefone = input.nextLine();
+                System.out.println("Digite o email:");
+                String email = input.nextLine();
+                Cliente novocliente = new Cliente(id, nome, telefone, email);
+                clienteDAO.atualizar(novocliente);
+                System.out.println("Cliente atualizado com sucesso!");
+            } else {
+                System.out.println("Cliente não atualizado.");
+            }
+        }
     }
     public void listaClientes(){
         List<Cliente> clientes = clienteDAO.listar();
