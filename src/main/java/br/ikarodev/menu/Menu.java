@@ -10,9 +10,11 @@ import java.util.Scanner;
 public class Menu {
     private ClienteDAO clienteDAO;
     private Scanner input;
+    private Utilitarios util;
     public Menu(){
         clienteDAO = new ClienteDAO();
         input = new Scanner(System.in);
+        util = new Utilitarios();
     }
 
     public void exibirMenu(){
@@ -57,10 +59,16 @@ public class Menu {
     }
 
     public void cadastrarCliente(){
-        System.out.println("Nome: ");
+        System.out.println("Nome completo: ");
         String nome = input.nextLine();
-        System.out.println("Telefone: ");
-        String telefone = input.nextLine();
+        String telefone;
+        do {
+            System.out.println("Telefone (ex: 84995662322): ");
+            telefone = input.nextLine();
+            if (!util.validarTelefone(telefone)) {
+                System.out.println("Telefone inválido!");
+            }
+        }while (!util.validarTelefone(telefone));
         System.out.println("Email: ");
         String email = input.nextLine();
         Cliente cliente = new Cliente(nome,telefone,email);
@@ -100,11 +108,17 @@ public class Menu {
             System.out.println("Deseja atualizar " + clienteDAO.buscarID(id).getNome() + " ? (S/N)");
             String conf = input.nextLine();
             if (conf.equalsIgnoreCase("s")) {
-                System.out.println("Digite o nome:");
+                System.out.println("Nome: ");
                 String nome = input.nextLine();
-                System.out.println("Digite o telefone:");
-                String telefone = input.nextLine();
-                System.out.println("Digite o email:");
+                String telefone;
+                do {
+                    System.out.println("Telefone (ex: 84995662322): ");
+                    telefone = input.nextLine();
+                    if (!util.validarTelefone(telefone)) {
+                        System.out.println("Telefone inválido!");
+                    }
+                }while (!util.validarTelefone(telefone));
+                System.out.println("Email: ");
                 String email = input.nextLine();
                 Cliente novocliente = new Cliente(id, nome, telefone, email);
                 clienteDAO.atualizar(novocliente);
