@@ -86,4 +86,28 @@ public class ClienteDAO {
         }
       return null;
      }
+
+     public void limparRegistros(){
+        String sql = "DELETE FROM Clientes";
+        try(Connection conn = Conexao.conectar();
+            Statement stmt = conn.createStatement()){
+            stmt.execute(sql);
+        }catch (SQLException e){
+            System.out.println("Erro ao limpar registros: " + e.getMessage());
+        }
+     }
+
+     public boolean TabelaVazia(){
+        String sql = "SELECT COUNT (*) FROM Clientes";
+        try(Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()){
+            if(rs.next()){
+                return rs.getInt(1) == 0;
+            }
+        }catch (SQLException e){
+            System.out.println("ERRO: " + e.getMessage());
+        }
+        return true;
+     }
 }
