@@ -63,18 +63,30 @@ public class Menu {
     }
 
     public void cadastrarCliente(){
-        System.out.println("Nome completo: ");
+        System.out.println("Nome completo ('0' para cancelar): ");
         String nome = input.nextLine();
+        if (nome.equalsIgnoreCase("0")){
+            System.out.println("Cadastro cancelado.");
+            return;
+        }
         String telefone;
         do {
-            System.out.println("Telefone (ex: 84995662322): ");
+            System.out.println("Telefone ex: 84995662322 ('0' para cancelar): ");
             telefone = input.nextLine();
+            if (telefone.equalsIgnoreCase("0")){
+                System.out.println("Cadastro cancelado.");
+                return;
+            }
             if (!util.validarTelefone(telefone)) {
                 System.out.println("Telefone inválido!");
             }
         }while (!util.validarTelefone(telefone));
-        System.out.println("Email: ");
+        System.out.println("Email ('0' para cancelar): ");
         String email = input.nextLine();
+        if (email.equalsIgnoreCase("0")){
+            System.out.println("Cadastro cancelado.");
+            return;
+        }
         Cliente cliente = new Cliente(nome,telefone,email);
         clienteDAO.inserir(cliente);
         System.out.println("Cliente cadastrado com sucesso!");
@@ -85,9 +97,21 @@ public class Menu {
             System.out.println("Não há registros na tabela.");
             return;
         }
-        System.out.println("Digite o id que deseja remover:");
-        int id = input.nextInt();
-        input.nextLine();
+        System.out.println("Digite o id que deseja remover ('0' para cancelar):");
+        int id;
+        while (true) {
+            String idString = input.nextLine();
+            try {
+                id = Integer.parseInt(idString);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Id inválido. Digite um id válido ('0' para cancelar) : ");
+            }
+        }
+        if (id == 0){
+            System.out.println("Remoção cancelada.");
+            return;
+        }
         Cliente cliente = clienteDAO.buscarID(id);
         if(cliente == null){
             System.out.println("Cliente não encontrado.");
@@ -114,9 +138,21 @@ public class Menu {
             System.out.println("Não há registros na tabela.");
             return;
         }
-        System.out.println("Digite o ID do cliente que deseja atualizar: ");
-        int id = input.nextInt();
-        input.nextLine();
+        System.out.println("Digite o ID do cliente que deseja atualizar ('0' para cancelar): ");
+        int id;
+        while(true) {
+            String idString = input.nextLine();
+            try {
+                id = Integer.parseInt(idString);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Id inválido. Digite um id válido ('0' para cancelar) : ");
+            }
+        }
+        if (id == 0){
+            System.out.println("Atualização cancelada.");
+            return;
+        }
         Cliente cliente = clienteDAO.buscarID(id);
         if(cliente == null){
             System.out.println("Cliente não encontrado.");
@@ -127,18 +163,30 @@ public class Menu {
           do {
               conf = input.nextLine();
               if (conf.equalsIgnoreCase("s")) {
-                  System.out.println("Nome: ");
+                  System.out.println("Nome: ('0' para cancelar)");
                   String nome = input.nextLine();
+                  if (nome.equalsIgnoreCase("0")){
+                      System.out.println("Atualização cancelada.");
+                      return;
+                  }
                   String telefone;
                   do {
-                      System.out.println("Telefone (ex: 84995662322): ");
+                      System.out.println("Telefone ex: 84995662322 ('0' para cancelar): ");
                       telefone = input.nextLine();
+                      if (telefone.equalsIgnoreCase("0")){
+                          System.out.println("Atualização cancelada.");
+                          return;
+                      }
                       if (!util.validarTelefone(telefone)) {
                           System.out.println("Telefone inválido!");
                       }
                   } while (!util.validarTelefone(telefone));
-                  System.out.println("Email: ");
+                  System.out.println("Email ('0' para cancelar): ");
                   String email = input.nextLine();
+                  if (email.equalsIgnoreCase("0")){
+                      System.out.println("Atualização cancelada.");
+                      return;
+                  }
                   Cliente novocliente = new Cliente(id, nome, telefone, email);
                   clienteDAO.atualizar(novocliente);
                   System.out.println("Cliente atualizado com sucesso!");
@@ -166,8 +214,21 @@ public class Menu {
             System.out.println("Não há registros na tabela.");
             return;
         }
-        System.out.println("Digite o id que deseja buscar: ");
-        int id = input.nextInt();
+        System.out.println("Digite o id que deseja buscar ('0' para cancelar): ");
+        int id;
+        while(true) {
+            String idString = input.nextLine();
+            try {
+                id = Integer.parseInt(idString);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Id inválido. Digite um id válido ('0' para cancelar) : ");
+            }
+        }
+        if (id == 0){
+            System.out.println("Busca cancelada.");
+            return;
+        }
         Cliente cliente = clienteDAO.buscarID(id);
         if(cliente == null){
             System.out.println("Cliente não encontrado.");
