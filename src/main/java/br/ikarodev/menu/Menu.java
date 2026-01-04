@@ -21,6 +21,7 @@ public class Menu {
         Conexao.CriarTabela();
         int opcao;
         do{
+        while(true) {
         System.out.println("-------Menu-------");
         System.out.println("""
                            1. Cadastrar cliente
@@ -31,9 +32,15 @@ public class Menu {
                            6. Limpar registros
                            0. Sair
                            """);
-        System.out.println("Selecione a opção desejada: ");
-        opcao = input.nextInt();
-        input.nextLine();
+            System.out.println("Selecione a opção desejada: ");
+            String opcaoString = input.nextLine().trim();
+            try {
+                opcao = Integer.parseInt(opcaoString);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Opção inválida.");
+            }
+        }
         switch (opcao){
             case 1:
              cadastrarCliente();
@@ -62,31 +69,43 @@ public class Menu {
      }while(opcao!=0);
     }
 
-    public void cadastrarCliente(){
-        System.out.println("Nome completo ('0' para cancelar): ");
-        String nome = input.nextLine();
-        if (nome.equalsIgnoreCase("0")){
-            System.out.println("Cadastro cancelado.");
-            return;
-        }
+    public void cadastrarCliente() {
+        String nome;
+        do {
+            System.out.println("Nome completo ('0' para cancelar): ");
+            nome = input.nextLine().trim();
+            if (nome.equalsIgnoreCase("0")) {
+                System.out.println("Cadastro cancelado.");
+                return;
+            }
+            if (!util.validarNome(nome)) {
+                System.out.println("Nome inválido! Verifique se o nome digitado tem somente letras e no minimo dois caracteres.");
+            }
+        } while (!util.validarNome(nome));
         String telefone;
         do {
             System.out.println("Telefone ex: 84995662322 ('0' para cancelar): ");
-            telefone = input.nextLine();
-            if (telefone.equalsIgnoreCase("0")){
+            telefone = input.nextLine().trim();
+            if (telefone.equalsIgnoreCase("0")) {
                 System.out.println("Cadastro cancelado.");
                 return;
             }
             if (!util.validarTelefone(telefone)) {
                 System.out.println("Telefone inválido!");
             }
-        }while (!util.validarTelefone(telefone));
-        System.out.println("Email ('0' para cancelar): ");
-        String email = input.nextLine();
-        if (email.equalsIgnoreCase("0")){
-            System.out.println("Cadastro cancelado.");
-            return;
-        }
+        } while (!util.validarTelefone(telefone));
+        String email;
+        do {
+            System.out.println("Email ex: joao12@gmail.com ('0' para cancelar): ");
+            email = input.nextLine().trim();
+            if (email.equalsIgnoreCase("0")) {
+                System.out.println("Cadastro cancelado.");
+                return;
+            }
+            if (!util.validarEmail(email)) {
+                System.out.println("Email inválido!");
+            }
+        }while(!util.validarEmail(email));
         Cliente cliente = new Cliente(nome,telefone,email);
         clienteDAO.inserir(cliente);
         System.out.println("Cliente cadastrado com sucesso!");
@@ -100,7 +119,7 @@ public class Menu {
         System.out.println("Digite o id que deseja remover ('0' para cancelar):");
         int id;
         while (true) {
-            String idString = input.nextLine();
+            String idString = input.nextLine().trim();
             try {
                 id = Integer.parseInt(idString);
                 break;
@@ -120,7 +139,7 @@ public class Menu {
             System.out.println("Tem certeza que deseja remover " + clienteDAO.buscarID(id).getNome() + " ? (S/N)");
             String conf;
             do {
-                conf = input.nextLine();
+                conf = input.nextLine().trim();
                 if (conf.equalsIgnoreCase("s")) {
                     clienteDAO.remover(id);
                     System.out.println("Cliente removido com sucesso!");
@@ -141,7 +160,7 @@ public class Menu {
         System.out.println("Digite o ID do cliente que deseja atualizar ('0' para cancelar): ");
         int id;
         while(true) {
-            String idString = input.nextLine();
+            String idString = input.nextLine().trim();
             try {
                 id = Integer.parseInt(idString);
                 break;
@@ -161,10 +180,10 @@ public class Menu {
             System.out.println("Deseja atualizar " + clienteDAO.buscarID(id).getNome() + " ? (S/N)");
             String conf;
           do {
-              conf = input.nextLine();
+              conf = input.nextLine().trim();
               if (conf.equalsIgnoreCase("s")) {
                   System.out.println("Nome: ('0' para cancelar)");
-                  String nome = input.nextLine();
+                  String nome = input.nextLine().trim();
                   if (nome.equalsIgnoreCase("0")){
                       System.out.println("Atualização cancelada.");
                       return;
@@ -172,7 +191,7 @@ public class Menu {
                   String telefone;
                   do {
                       System.out.println("Telefone ex: 84995662322 ('0' para cancelar): ");
-                      telefone = input.nextLine();
+                      telefone = input.nextLine().trim();
                       if (telefone.equalsIgnoreCase("0")){
                           System.out.println("Atualização cancelada.");
                           return;
@@ -182,7 +201,7 @@ public class Menu {
                       }
                   } while (!util.validarTelefone(telefone));
                   System.out.println("Email ('0' para cancelar): ");
-                  String email = input.nextLine();
+                  String email = input.nextLine().trim();
                   if (email.equalsIgnoreCase("0")){
                       System.out.println("Atualização cancelada.");
                       return;
@@ -217,7 +236,7 @@ public class Menu {
         System.out.println("Digite o id que deseja buscar ('0' para cancelar): ");
         int id;
         while(true) {
-            String idString = input.nextLine();
+            String idString = input.nextLine().trim();
             try {
                 id = Integer.parseInt(idString);
                break;
@@ -246,7 +265,7 @@ public class Menu {
         System.out.println("ATENÇÃO: ESTA AÇÃO APAGARÁ TODOS OS REGISTROS DE CLIENTES E NÃO SERÁ POSSÍVEL RECUPERAR.");
         String opcao;
         do {
-            opcao = input.nextLine();
+            opcao = input.nextLine().trim();
             if (opcao.equalsIgnoreCase("s")) {
                 clienteDAO.limparRegistros();
                 System.out.println("Todos os registros foram apagados com sucesso.");
