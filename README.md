@@ -159,9 +159,12 @@ Essa estrutura segue uma separação por responsabilidade:
 
 ## 👨‍💻 Desenvolvedor
 
-**Nome:** Ikaro Ferreira Brito
-**Área de Estudo:** Tecnologia da Informação
+**Nome:** Ikaro Ferreira Brito  
+
+**Área de Estudo:** Tecnologia da Informação  
+
 **Objetivo:** Aprendizado prático em desenvolvimento de sistemas, lógica de programação e POO
+
 
 * GitHub: [*https://github.com/ikaro9*](https://github.com/ikaro9)
 * LinkedIn: [www.linkedin.com/in/ikaro-ferreira-ti](http://www.linkedin.com/in/ikaro-ferreira-ti)
