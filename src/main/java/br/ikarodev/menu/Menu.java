@@ -220,7 +220,7 @@ public class Menu {
             String idString = input.nextLine();
             try {
                 id = Integer.parseInt(idString);
-                break;
+               break;
             } catch (NumberFormatException e) {
                 System.out.println("Id inválido. Digite um id válido ('0' para cancelar) : ");
             }
