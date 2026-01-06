@@ -88,10 +88,12 @@ public class ClienteDAO {
      }
 
      public void limparRegistros(){
-        String sql = "DELETE FROM Clientes";
+        String sqlDelete = "DELETE FROM Clientes";
+        String sqlReset = "DELETE FROM sqlite_sequence WHERE name = 'Clientes'";
         try(Connection conn = Conexao.conectar();
             Statement stmt = conn.createStatement()){
-            stmt.execute(sql);
+            stmt.execute(sqlDelete);
+            stmt.execute(sqlReset);
         }catch (SQLException e){
             System.out.println("Erro ao limpar registros: " + e.getMessage());
         }
