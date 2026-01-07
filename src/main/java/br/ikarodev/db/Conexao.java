@@ -13,11 +13,12 @@ public class Conexao {
   }
 
   public static void CriarTabela(){
-      String sql = "CREATE TABLE IF NOT EXISTS Clientes (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Nome TEXT NOT NULL, Telefone TEXT, Email TEXT)";
+      String sql = "CREATE TABLE IF NOT EXISTS Clientes (ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Nome TEXT NOT NULL, Telefone TEXT, Email TEXT, UNIQUE (Nome, Telefone, Email))";
       try(Connection conn = conectar(); Statement stmt = conn.createStatement()) {
           stmt.execute(sql);
       } catch (SQLException e) {
-          System.out.println("Falha ao criar tabela: " + e.getMessage());
+          System.out.println("Falha ao criar tabela");
+          e.printStackTrace();;
       }
   }
 }

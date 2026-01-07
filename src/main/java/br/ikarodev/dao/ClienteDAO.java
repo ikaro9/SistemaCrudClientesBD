@@ -8,43 +8,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO {
-    public void inserir (Cliente cliente){
+    public void inserir (Cliente cliente) throws SQLException{
         String sql = "INSERT INTO Clientes (Nome, Telefone, Email) VALUES (?,?,?)";
         try(Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1,cliente.getNome());
             stmt.setString(2,cliente.getTelefone());
             stmt.setString(3, cliente.getEmail());
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Erro ao inserir cliente: " + e.getMessage());
         }
     }
 
-    public void remover(int id){
+    public void remover(int id)throws SQLException{
         String sql = "DELETE FROM Clientes WHERE ID = ?";
-      try(Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)){
-          stmt.setInt(1,id);
+      try(Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+          stmt.setInt(1, id);
           stmt.executeUpdate();
-      } catch (SQLException e) {
-          System.out.println("Erro ao remover cliente: " + e.getMessage());
       }
     }
 
-    public void atualizar(Cliente cliente){
+    public void atualizar(Cliente cliente)throws SQLException {
         String sql = "UPDATE Clientes set Nome = ?,Telefone = ?,Email = ? WHERE ID = ?";
-        try(Connection conn = Conexao.conectar();PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, cliente.getNome());
             stmt.setString(2, cliente.getTelefone());
             stmt.setString(3, cliente.getEmail());
-            stmt.setInt(4,cliente.getId());
+            stmt.setInt(4, cliente.getId());
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Erro ao atualizar cliente: " + e.getMessage());
         }
+    }
 
-        }
-
-     public List<Cliente> listar(){
+     public List<Cliente> listar()throws SQLException{
         List<Cliente> clientes = new ArrayList<>();
         String sql = "SELECT * FROM Clientes";
         try(Connection conn = Conexao.conectar();
@@ -59,13 +52,11 @@ public class ClienteDAO {
         clientes.add(cliente);
         }
 
-        } catch (SQLException e) {
-        System.out.println("Erro ao atualizar cliente: " + e.getMessage());
-    }
+        }
         return clientes;
      }
 
-     public Cliente buscarID(int id){
+     public Cliente buscarID(int id)throws SQLException{
         String sql = "SELECT * FROM Clientes WHERE ID = ?";
         try(Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -87,19 +78,17 @@ public class ClienteDAO {
       return null;
      }
 
-     public void limparRegistros(){
-        String sqlDelete = "DELETE FROM Clientes";
-        String sqlReset = "DELETE FROM sqlite_sequence WHERE name = 'Clientes'";
-        try(Connection conn = Conexao.conectar();
-            Statement stmt = conn.createStatement()){
-            stmt.execute(sqlDelete);
-            stmt.execute(sqlReset);
-        }catch (SQLException e){
-            System.out.println("Erro ao limpar registros: " + e.getMessage());
-        }
+     public void limparRegistros()throws SQLException {
+         String sqlDelete = "DELETE FROM Clientes";
+         String sqlReset = "DELETE FROM sqlite_sequence WHERE name = 'Clientes'";
+         try (Connection conn = Conexao.conectar();
+              Statement stmt = conn.createStatement()) {
+             stmt.execute(sqlDelete);
+             stmt.execute(sqlReset);
+         }
      }
 
-     public boolean TabelaVazia(){
+     public boolean TabelaVazia()throws SQLException{
         String sql = "SELECT COUNT (*) FROM Clientes";
         try(Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -107,8 +96,6 @@ public class ClienteDAO {
             if(rs.next()){
                 return rs.getInt(1) == 0;
             }
-        }catch (SQLException e){
-            System.out.println("ERRO: " + e.getMessage());
         }
         return true;
      }
