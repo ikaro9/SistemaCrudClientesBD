@@ -173,7 +173,6 @@ Essa estrutura segue uma separação por responsabilidade:
 
 ## 📌 Melhorias Futuras (Sugestões)
 
-* 🔐 Validação avançada de dados
 * 🖥️ Interface gráfica (Swing ou JavaFX)
 * 📊 Relatórios de clientes
 * 🔍 Filtros e ordenação de dados
